@@ -65,7 +65,7 @@ export const Main = () => {
             <input type="checkbox" {...register("male")} />
           </label>
           {emailValidationLoading && <p>checking email</p>}
-          <button onClick={submit}>Submit</button>
+          <button disabled={!isEmailValid} onClick={submit}>Submit</button>
         </form>
       </MainStyle>
     </MainWrapper>
