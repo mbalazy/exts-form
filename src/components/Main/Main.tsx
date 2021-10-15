@@ -1,30 +1,11 @@
-import { MainStyle, MainWrapper } from "./Main.style";
-import { useForm } from "react-hook-form";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { MainStyle, MainWrapper } from "./Main.style";
+import { IEmail, IEmailValidationResponse, IFormInputs } from "../../lib/types";
+import { BACKEND_URL, KEYSTROKE_DELAY } from "../../lib/consts";
 
-type IEmail = string
-
-type IFormInputs = {
-  name: string;
-  surname: string;
-  birthdate: string;
-  email: IEmail;
-  male: boolean;
-};
-
-type IStatusMessage = "Valid" | "Not Valid";
-
-type IEmailValidationResponse = {
-  status: number;
-  status_message: IStatusMessage;
-  validation_status: boolean;
-  email: string;
-};
-
-const KEYSTROKE_DELAY = 350;
 let timeout: NodeJS.Timeout;
-const URL = "/api/email-validator.php";
 
 export const Main = () => {
   const { register, watch, handleSubmit } = useForm<IFormInputs>();
@@ -35,7 +16,7 @@ export const Main = () => {
 
   const checkEmailValidationStatus = async (email: IEmail) =>
     await axios
-      .get<IEmailValidationResponse>(URL, { params: { email } })
+      .get<IEmailValidationResponse>(BACKEND_URL, { params: { email } })
       .then((res) => {
         const isEmailValid = res.data.validation_status;
         console.log(isEmailValid);
