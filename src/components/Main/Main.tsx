@@ -3,9 +3,12 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useEffect } from "react";
 
-type FormData = {
-  firstName: string;
+type FormInputs = {
+  name: string;
+  surname: string;
+  birthdate: string;
   email: string;
+  male: boolean;
 };
 
 const KEYSTROKE_DELAY = 350;
@@ -39,12 +42,24 @@ export const Main = () => {
       <MainStyle>
         <form onSubmit={submit}>
           <label>
-            First Name
-            <input {...register("firstName")} />
+            Name
+            <input {...register("name")} />
+          </label>
+          <label>
+            Surname
+            <input {...register("surname")} />
+          </label>
+          <label>
+            Birthdate
+            <input {...register("birthdate")} />
           </label>
           <label>
             Email
             <input {...register("email")} />
+          </label>
+          <label>
+            Male
+            <input type="checkbox" {...register("male")} />
           </label>
           <button onClick={submit}>Submit</button>
         </form>
