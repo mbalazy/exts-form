@@ -1,7 +1,7 @@
 import { MainStyle, MainWrapper } from "./Main.style";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type FormInputs = {
   name: string;
@@ -22,26 +22,32 @@ type EmailValidationResponse = {
 
 const KEYSTROKE_DELAY = 350;
 let timeout: NodeJS.Timeout;
-const url = "/api/email-validator.php";
+const URL = "/api/email-validator.php";
 
 export const Main = () => {
   const { register, watch, handleSubmit } = useForm<FormInputs>();
+  const [emailValidationLoading, setEmailValidationLoading] = useState(false);
+
   const emailValue = watch("email") || "";
   const submit = handleSubmit((data) => alert(JSON.stringify(data, null, 4)));
 
-  const handleEmailValidation = async (email: string) => {
-    try {
-      clearTimeout(timeout);
-      timeout = setTimeout(async function () {
-        const res = await axios.get<EmailValidationResponse>(url, {
-          params: { email },
-        });
+  const checkEmailValidationStatus = async (email: FormInputs["email"]) =>
+    await axios
+      .get<EmailValidationResponse>(URL, { params: { email } })
+      .then((res) => {
         const isEmailValid = res.data.validation_status;
         console.log(isEmailValid);
-      }, KEYSTROKE_DELAY);
-    } catch (error) {
-      console.error(error);
-    }
+      })
+      .catch((err) => console.error(err));
+
+  const handleEmailValidation = (email: FormInputs["email"]) => {
+    setEmailValidationLoading(true);
+    clearTimeout(timeout);
+
+    timeout = setTimeout(async () => {
+      await checkEmailValidationStatus(email);
+      setEmailValidationLoading(false);
+    }, KEYSTROKE_DELAY);
   };
 
   useEffect(() => {
@@ -72,6 +78,7 @@ export const Main = () => {
             Male
             <input type="checkbox" {...register("male")} />
           </label>
+          {emailValidationLoading && <p>checking email</p>}
           <button onClick={submit}>Submit</button>
         </form>
       </MainStyle>
