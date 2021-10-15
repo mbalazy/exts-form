@@ -3,19 +3,21 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-type FormInputs = {
+type IEmail = string
+
+type IFormInputs = {
   name: string;
   surname: string;
   birthdate: string;
-  email: string;
+  email: IEmail;
   male: boolean;
 };
 
-type StatusMessage = "Valid" | "Not Valid";
+type IStatusMessage = "Valid" | "Not Valid";
 
-type EmailValidationResponse = {
+type IEmailValidationResponse = {
   status: number;
-  status_message: StatusMessage;
+  status_message: IStatusMessage;
   validation_status: boolean;
   email: string;
 };
@@ -25,22 +27,22 @@ let timeout: NodeJS.Timeout;
 const URL = "/api/email-validator.php";
 
 export const Main = () => {
-  const { register, watch, handleSubmit } = useForm<FormInputs>();
+  const { register, watch, handleSubmit } = useForm<IFormInputs>();
   const [emailValidationLoading, setEmailValidationLoading] = useState(false);
 
   const emailValue = watch("email") || "";
   const submit = handleSubmit((data) => alert(JSON.stringify(data, null, 4)));
 
-  const checkEmailValidationStatus = async (email: FormInputs["email"]) =>
+  const checkEmailValidationStatus = async (email: IEmail) =>
     await axios
-      .get<EmailValidationResponse>(URL, { params: { email } })
+      .get<IEmailValidationResponse>(URL, { params: { email } })
       .then((res) => {
         const isEmailValid = res.data.validation_status;
         console.log(isEmailValid);
       })
       .catch((err) => console.error(err));
 
-  const handleEmailValidation = (email: FormInputs["email"]) => {
+  const handleEmailValidation = (email: IEmail) => {
     setEmailValidationLoading(true);
     clearTimeout(timeout);
 
