@@ -8,7 +8,12 @@ import { BACKEND_URL, KEYSTROKE_DELAY } from "../../lib/consts";
 let timeout: NodeJS.Timeout;
 
 export const Main = () => {
-  const { register, watch, handleSubmit } = useForm<IFormInputs>();
+  const {
+    register,
+    watch,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<IFormInputs>({ mode: "onChange" });
 
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [emailValidationLoading, setEmailValidationLoading] = useState(false);
@@ -38,16 +43,20 @@ export const Main = () => {
       : handleEmailValidation(emailValue);
   }, [emailValue]);
 
-  console.log(isEmailValid);
-
   return (
     <MainWrapper>
       <MainStyle>
         <form onSubmit={submit}>
           <label>
             Name
-            <input {...register("name")} />
+            <input
+              {...register("name", {
+                validate: (v) => v.length > 3 || "Name > 3 characters",
+                required: "This field is required",
+              })}
+            />
           </label>
+          <h2>{errors.name?.message}</h2>
           <label>
             Surname
             <input {...register("surname")} />
@@ -60,12 +69,18 @@ export const Main = () => {
             Email
             <input {...register("email")} />
           </label>
+          {!isEmailValid && emailValue.length > 0 && <h3>Email not valid</h3>}
           <label>
             Male
             <input type="checkbox" {...register("male")} />
           </label>
           {emailValidationLoading && <p>checking email</p>}
-          <button disabled={!isEmailValid} onClick={submit}>Submit</button>
+          <button
+            disabled={!isEmailValid || emailValidationLoading}
+            type="submit"
+          >
+            Submit
+          </button>
         </form>
       </MainStyle>
     </MainWrapper>
