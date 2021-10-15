@@ -11,6 +11,15 @@ type FormInputs = {
   male: boolean;
 };
 
+type StatusMessage = "Valid" | "Not Valid";
+
+type EmailValidationResponse = {
+  status: number;
+  status_message: StatusMessage;
+  validation_status: boolean;
+  email: string;
+};
+
 const KEYSTROKE_DELAY = 350;
 let timeout: NodeJS.Timeout;
 const url = "/api/email-validator.php";
@@ -20,12 +29,15 @@ export const Main = () => {
   const emailValue = watch("email") || "";
   const submit = handleSubmit((data) => alert(JSON.stringify(data, null, 4)));
 
-  const handleValidation = async (email: string) => {
+  const handleEmailValidation = async (email: string) => {
     try {
       clearTimeout(timeout);
       timeout = setTimeout(async function () {
-        const res = await axios.get(url, { params: { email } });
-        console.log(res.data);
+        const res = await axios.get<EmailValidationResponse>(url, {
+          params: { email },
+        });
+        const isEmailValid = res.data.validation_status;
+        console.log(isEmailValid);
       }, KEYSTROKE_DELAY);
     } catch (error) {
       console.error(error);
@@ -33,7 +45,7 @@ export const Main = () => {
   };
 
   useEffect(() => {
-    if (emailValue) handleValidation(emailValue);
+    if (emailValue) handleEmailValidation(emailValue);
   }, [emailValue]);
 
   return (
