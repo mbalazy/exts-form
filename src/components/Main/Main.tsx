@@ -9,6 +9,8 @@ let timeout: NodeJS.Timeout;
 
 export const Main = () => {
   const { register, watch, handleSubmit } = useForm<IFormInputs>();
+
+  const [isEmailValid, setIsEmailValid] = useState(false);
   const [emailValidationLoading, setEmailValidationLoading] = useState(false);
 
   const emailValue = watch("email") || "";
@@ -17,10 +19,7 @@ export const Main = () => {
   const checkEmailValidationStatus = async (email: IEmail) =>
     await axios
       .get<IEmailValidationResponse>(BACKEND_URL, { params: { email } })
-      .then((res) => {
-        const isEmailValid = res.data.validation_status;
-        console.log(isEmailValid);
-      })
+      .then((res) => setIsEmailValid(res.data.validation_status))
       .catch((err) => console.error(err));
 
   const handleEmailValidation = (email: IEmail) => {
@@ -34,8 +33,12 @@ export const Main = () => {
   };
 
   useEffect(() => {
-    if (emailValue) handleEmailValidation(emailValue);
+    return emailValue.length === 0
+      ? setIsEmailValid(false)
+      : handleEmailValidation(emailValue);
   }, [emailValue]);
+
+  console.log(isEmailValid);
 
   return (
     <MainWrapper>
