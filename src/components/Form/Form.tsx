@@ -27,18 +27,19 @@ export const Form = () => {
   const emailValue = watch("email") || "";
   const submit = handleSubmit((data) => alert(JSON.stringify(data, null, 4)));
 
+  const resolveEmailErrorInForm = (valid: boolean) =>
+    valid === false
+      ? setError("email", {
+          message: "Invalid email",
+        })
+      : clearErrors(["email"]);
+
   const checkEmailValidationStatus = async (email: IEmail) =>
     await axios
       .get<IEmailValidationResponse>(BACKEND_URL, { params: { email } })
-      .then((res) => {
-        const validationState = res.data.validation_status;
-        setIsEmailValid(validationState);
-
-        validationState === false
-          ? setError("email", {
-              message: "Invalid email",
-            })
-          : clearErrors(["email"]);
+      .then(({ data: { validation_status } }) => {
+        setIsEmailValid(validation_status);
+        resolveEmailErrorInForm(validation_status);
       })
       .catch((err) => console.error(err));
 
