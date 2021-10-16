@@ -7,6 +7,7 @@ import { FormStyled } from "./Form.style";
 import { Label } from "../Label/Label";
 import { SubmitButton } from "../SubmitButton/SubmitButton";
 import { Input } from "../Input/Input";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 
 let timeout: NodeJS.Timeout;
 
@@ -58,7 +59,7 @@ export const Form = () => {
           }}
         />
       </Label>
-      {errors.name && <p>{errors.name?.message}</p>}
+      {errors.name && <ErrorMessage message={errors.name.message} />}
       <Label labelName="surname">
         <Input register={register} fieldName="surname" />
       </Label>
@@ -68,7 +69,9 @@ export const Form = () => {
       <Label labelName="email" isRequired>
         <Input register={register} fieldName="email" />
       </Label>
-      {!isEmailValid && emailValue.length > 0 && <p>Email not valid</p>}
+      {!isEmailValid && emailValue.length > 0 && (
+        <ErrorMessage message="Email not valid" />
+      )}
       <Label labelName="male" sideBySide>
         <Input type="checkbox" register={register} fieldName="male" />
       </Label>
