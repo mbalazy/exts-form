@@ -15,6 +15,8 @@ export const Form = () => {
   const {
     register,
     watch,
+    setError,
+    clearErrors,
     formState: { errors },
     handleSubmit,
   } = useForm<IFormInputs>({ mode: "onChange" });
@@ -28,7 +30,16 @@ export const Form = () => {
   const checkEmailValidationStatus = async (email: IEmail) =>
     await axios
       .get<IEmailValidationResponse>(BACKEND_URL, { params: { email } })
-      .then((res) => setIsEmailValid(res.data.validation_status))
+      .then((res) => {
+        const validationState = res.data.validation_status;
+        setIsEmailValid(validationState);
+
+        validationState === false
+          ? setError("email", {
+              message: "Invalid email",
+            })
+          : clearErrors(["email"]);
+      })
       .catch((err) => console.error(err));
 
   const handleEmailValidation = (email: IEmail) => {
@@ -46,6 +57,8 @@ export const Form = () => {
       ? setIsEmailValid(false)
       : handleEmailValidation(emailValue);
   }, [emailValue]);
+
+  console.log(errors);
 
   return (
     <FormStyled onSubmit={submit}>
@@ -67,11 +80,15 @@ export const Form = () => {
         <Input type="date" register={register} fieldName="birthdate" />
       </Label>
       <Label labelName="email" isRequired>
-        <Input register={register} fieldName="email" />
+        <Input
+          register={register}
+          fieldName="email"
+          registerOptions={{
+            validate: () => isEmailValid || "Invalid email",
+          }}
+        />
       </Label>
-      {!isEmailValid && emailValue.length > 0 && (
-        <ErrorMessage message="Email not valid" />
-      )}
+      {errors.email && <ErrorMessage message={errors.email.message} />}
       <Label labelName="male" sideBySide>
         <Input type="checkbox" register={register} fieldName="male" />
       </Label>
