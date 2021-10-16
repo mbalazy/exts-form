@@ -48,7 +48,7 @@ export const Form = () => {
 
   return (
     <FormStyled onSubmit={submit}>
-      <Label isRequired label="name">
+      <Label isRequired labelName="name">
         <Input
           register={register}
           fieldName="name"
@@ -59,17 +59,17 @@ export const Form = () => {
         />
       </Label>
       {errors.name && <p>{errors.name?.message}</p>}
-      <Label label="surname">
+      <Label labelName="surname">
         <Input register={register} fieldName="surname" />
       </Label>
-      <Label label="birthdate">
+      <Label labelName="birthdate">
         <Input type="date" register={register} fieldName="birthdate" />
       </Label>
-      <Label label="email" isRequired>
+      <Label labelName="email" isRequired>
         <Input register={register} fieldName="email" />
       </Label>
       {!isEmailValid && emailValue.length > 0 && <p>Email not valid</p>}
-      <Label label="male" sideBySide>
+      <Label labelName="male" sideBySide>
         <Input type="checkbox" register={register} fieldName="male" />
       </Label>
       {emailValidationLoading && <p>checking email</p>}

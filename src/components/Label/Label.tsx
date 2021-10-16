@@ -2,20 +2,20 @@ import { LabelStyled } from "./Label.style";
 
 type InputProps = {
   children: JSX.Element;
-  label: string;
+  labelName: string;
   isRequired?: boolean;
   sideBySide?: boolean;
 };
 
 export const Label = ({
   children,
-  label,
+  labelName,
   isRequired,
   sideBySide,
 }: InputProps) => {
   return (
     <LabelStyled isRequired={isRequired} sideBySide={sideBySide}>
-      <span>{label}</span>
+      <span>{labelName}</span>
       {children}
     </LabelStyled>
   );
