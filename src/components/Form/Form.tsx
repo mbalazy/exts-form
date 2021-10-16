@@ -5,6 +5,7 @@ import { IEmail, IEmailValidationResponse, IFormInputs } from "../../lib/types";
 import { BACKEND_URL, KEYSTROKE_DELAY } from "../../lib/consts";
 import { FormStyled, InputStyled } from "./Form.style";
 import { Label } from "../Label/Label";
+import { SubmitButton } from "../SubmitButton/SubmitButton";
 
 let timeout: NodeJS.Timeout;
 
@@ -65,13 +66,11 @@ export const Form = () => {
         <InputStyled {...register("email")} />
       </Label>
       {!isEmailValid && emailValue.length > 0 && <p>Email not valid</p>}
-      <Label label='male' sideBySide>
+      <Label label="male" sideBySide>
         <InputStyled type="checkbox" {...register("male")} />
       </Label>
       {emailValidationLoading && <p>checking email</p>}
-      <button disabled={!isEmailValid || emailValidationLoading} type="submit">
-        Submit
-      </button>
+      <SubmitButton disabled={!isEmailValid || emailValidationLoading} />
     </FormStyled>
   );
 };
