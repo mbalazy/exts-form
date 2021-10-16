@@ -3,9 +3,10 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { IEmail, IEmailValidationResponse, IFormInputs } from "../../lib/types";
 import { BACKEND_URL, KEYSTROKE_DELAY } from "../../lib/consts";
-import { FormStyled, InputStyled } from "./Form.style";
+import { FormStyled } from "./Form.style";
 import { Label } from "../Label/Label";
 import { SubmitButton } from "../SubmitButton/SubmitButton";
+import { Input } from "../Input/Input";
 
 let timeout: NodeJS.Timeout;
 
@@ -48,26 +49,28 @@ export const Form = () => {
   return (
     <FormStyled onSubmit={submit}>
       <Label isRequired label="name">
-        <InputStyled
-          {...register("name", {
+        <Input
+          register={register}
+          fieldName="name"
+          registerOptions={{
             validate: (v) => v.length > 3 || "Name > 3 characters",
             required: "Name is required",
-          })}
+          }}
         />
       </Label>
       {errors.name && <p>{errors.name?.message}</p>}
       <Label label="surname">
-        <InputStyled {...register("surname")} />
+        <Input register={register} fieldName="surname" />
       </Label>
       <Label label="birthdate">
-        <InputStyled type="date" {...register("birthdate")} />
+        <Input type="date" register={register} fieldName="birthdate" />
       </Label>
       <Label label="email" isRequired>
-        <InputStyled {...register("email")} />
+        <Input register={register} fieldName="email" />
       </Label>
       {!isEmailValid && emailValue.length > 0 && <p>Email not valid</p>}
       <Label label="male" sideBySide>
-        <InputStyled type="checkbox" {...register("male")} />
+        <Input type="checkbox" register={register} fieldName="male" />
       </Label>
       {emailValidationLoading && <p>checking email</p>}
       <SubmitButton disabled={!isEmailValid || emailValidationLoading} />

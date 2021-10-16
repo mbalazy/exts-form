@@ -1,4 +1,6 @@
-export type IEmail = string
+import { UseFormRegister } from "react-hook-form";
+
+export type IEmail = string;
 
 export type IFormInputs = {
   name: string;
@@ -8,6 +10,15 @@ export type IFormInputs = {
   male: boolean;
 };
 
+export type IRegister = UseFormRegister<IFormInputs>;
+
+export type IFormInputName =
+  | "name"
+  | "surname"
+  | "birthdate"
+  | "email"
+  | "male";
+
 export type IStatusMessage = "Valid" | "Not Valid";
 
 export type IEmailValidationResponse = {
@@ -16,4 +27,3 @@ export type IEmailValidationResponse = {
   validation_status: boolean;
   email: string;
 };
-
