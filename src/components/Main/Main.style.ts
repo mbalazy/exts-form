@@ -9,4 +9,6 @@ export const MainStyle = styled.div`
   padding: 3rem;
   border-radius: 6px;
   min-height: calc(100vh - 14rem);
+  display: grid;
+  place-items: center;
 `;
