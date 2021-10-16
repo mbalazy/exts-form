@@ -1,10 +1,8 @@
 const mainTheme = {
   colors: {
-    primary: '#D6A81A',
-    secondary: '#DADAD8',
+    primary: '#EEEEEE',
     white: '#FFF',
     black: 'rgba(0, 0, 0, 0.9)',
-    overlay: 'rgba(48, 48, 48, 0.9)',
   },
 
   fontSize: {

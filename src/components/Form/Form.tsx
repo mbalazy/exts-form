@@ -3,6 +3,9 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { IEmail, IEmailValidationResponse, IFormInputs } from "../../lib/types";
 import { BACKEND_URL, KEYSTROKE_DELAY } from "../../lib/consts";
+import { FormStyled, InputStyled } from "./Form.style";
+import { Label } from "../Label/Label";
+
 let timeout: NodeJS.Timeout;
 
 export const Form = () => {
@@ -40,39 +43,35 @@ export const Form = () => {
       ? setIsEmailValid(false)
       : handleEmailValidation(emailValue);
   }, [emailValue]);
+
   return (
-    <form onSubmit={submit}>
-      <label>
-        Name
-        <input
+    <FormStyled onSubmit={submit}>
+      <Label isRequired label="name">
+        <InputStyled
           {...register("name", {
             validate: (v) => v.length > 3 || "Name > 3 characters",
-            required: "This field is required",
+            required: "Name is required",
           })}
         />
-      </label>
-      <h2>{errors.name?.message}</h2>
-      <label>
-        Surname
-        <input {...register("surname")} />
-      </label>
-      <label>
-        Birthdate
-        <input type="date" {...register("birthdate")} />
-      </label>
-      <label>
-        Email
-        <input {...register("email")} />
-      </label>
-      {!isEmailValid && emailValue.length > 0 && <h3>Email not valid</h3>}
-      <label>
-        Male
-        <input type="checkbox" {...register("male")} />
-      </label>
+      </Label>
+      {errors.name && <p>{errors.name?.message}</p>}
+      <Label label="surname">
+        <InputStyled {...register("surname")} />
+      </Label>
+      <Label label="birthdate">
+        <InputStyled type="date" {...register("birthdate")} />
+      </Label>
+      <Label label="email" isRequired>
+        <InputStyled {...register("email")} />
+      </Label>
+      {!isEmailValid && emailValue.length > 0 && <p>Email not valid</p>}
+      <Label label='male' sideBySide>
+        <InputStyled type="checkbox" {...register("male")} />
+      </Label>
       {emailValidationLoading && <p>checking email</p>}
       <button disabled={!isEmailValid || emailValidationLoading} type="submit">
         Submit
       </button>
-    </form>
+    </FormStyled>
   );
 };
