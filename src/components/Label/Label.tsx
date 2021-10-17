@@ -1,7 +1,7 @@
 import { LabelStyled } from "./Label.style";
 
-type InputProps = {
-  children: JSX.Element;
+type LabelProps = {
+  children: JSX.Element | JSX.Element[];
   labelName: string;
   isRequired?: boolean;
   sideBySide?: boolean;
@@ -12,7 +12,7 @@ export const Label = ({
   labelName,
   isRequired,
   sideBySide,
-}: InputProps) => {
+}: LabelProps) => {
   return (
     <LabelStyled isRequired={isRequired} sideBySide={sideBySide}>
       <span>{labelName}</span>

@@ -5,5 +5,5 @@ type ErrorMessageProps = {
 };
 
 export const ErrorMessage = ({ message }: ErrorMessageProps) => {
-  return <ErrorMessageStyled>{message}</ErrorMessageStyled>;
+  return message ? <ErrorMessageStyled>{message}</ErrorMessageStyled> : null;
 };

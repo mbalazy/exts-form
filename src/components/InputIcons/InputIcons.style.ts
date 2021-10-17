@@ -8,5 +8,5 @@ export const IconsWrapper = styled.div`
 
   position: absolute;
   right: 1rem;
-  top: 3.6rem;
+  top: 3.7rem;
 `;

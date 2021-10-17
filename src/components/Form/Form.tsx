@@ -72,8 +72,8 @@ export const Form = () => {
             required: "Name is required",
           }}
         />
+        {<ErrorMessage message={errors?.name?.message} />}
       </Label>
-      {errors.name && <ErrorMessage message={errors.name.message} />}
       <Label labelName="surname">
         <Input register={register} fieldName="surname" />
       </Label>
@@ -89,8 +89,8 @@ export const Form = () => {
             validate: () => isEmailValid || "Invalid email",
           }}
         />
+        {<ErrorMessage message={errors?.email?.message} />}
       </Label>
-      {errors.email && <ErrorMessage message={errors.email.message} />}
       <Label labelName="male" sideBySide>
         <Input type="checkbox" register={register} fieldName="male" />
       </Label>
