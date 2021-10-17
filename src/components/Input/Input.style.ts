@@ -10,17 +10,17 @@ export const InputStyled = styled.input<InputStyledProps>`
   margin-top: 1rem;
   padding: 0.8rem;
   border-radius: 4px;
-  border: 1px solid ${({ theme }) => theme.colors.black};
+  border: 2px solid ${({ theme }) => theme.colors.black};
 
   ${({ withGreenBorder }) =>
     withGreenBorder &&
     css`
-      border: 1px solid green;
+      border: 2px solid green;
     `}
 
   ${({ withRedBorder }) =>
     withRedBorder &&
     css`
-      border: 1px solid red;
+      border: 2px solid red;
     `}
 `;

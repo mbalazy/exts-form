@@ -65,9 +65,9 @@ export const Form = () => {
     <FormStyled onSubmit={submit}>
       <Label isRequired labelName="name">
         <Input
-          errors={errors}
-          register={register}
           fieldName="name"
+          fieldError={errors.name}
+          register={register}
           registerOptions={{
             validate: (v) => v.length > 3 || "Name > 3 characters",
             required: "Name is required",
@@ -83,9 +83,9 @@ export const Form = () => {
       </Label>
       <Label labelName="email" isRequired>
         <Input
-          register={register}
           fieldName="email"
-          errors={errors}
+          fieldError={errors.email}
+          register={register}
           registerOptions={{
             validate: () => isEmailValid || "Invalid email",
           }}

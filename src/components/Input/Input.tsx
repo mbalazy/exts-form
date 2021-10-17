@@ -1,5 +1,6 @@
-import { RegisterOptions } from "react-hook-form";
-import { IFieldsError, IFormInputName, IRegister } from "../../lib/types";
+import { useEffect, useState } from "react";
+import { FieldError, RegisterOptions } from "react-hook-form";
+import { IFormInputName, IRegister } from "../../lib/types";
 import { InputStyled } from "./Input.style";
 
 type InputProps = {
@@ -7,7 +8,7 @@ type InputProps = {
   fieldName: IFormInputName;
   registerOptions?: RegisterOptions;
   type?: string;
-  errors?: IFieldsError;
+  fieldError?: FieldError;
 };
 
 export const Input = ({
@@ -15,19 +16,25 @@ export const Input = ({
   fieldName,
   registerOptions,
   type,
-  errors,
+  fieldError,
 }: InputProps) => {
-  // console.log(errors);
+  const [applyGreen, setApplyGreen] = useState(false);
+  const [applyRed, setApplyRed] = useState(false);
 
-  let applyRed = () => false;
-  if (errors) {
-    applyRed = () => errors[fieldName]?.message !== undefined;
-  }
+  //triger green border on first keystroke
+  const handleChange = () => setApplyGreen(true);
+
+  //conditionally overwrite (in css) green border with red
+  //when there are errors in that field
+  useEffect(() => {
+    fieldError ? setApplyRed(true) : setApplyRed(false);
+  }, [fieldError]);
 
   return (
     <InputStyled
-      withRedBorder={applyRed()}
-      {...register(fieldName, registerOptions)}
+      withRedBorder={applyRed}
+      withGreenBorder={applyGreen}
+      {...register(fieldName, { onChange: handleChange, ...registerOptions })}
       type={type}
     />
   );
