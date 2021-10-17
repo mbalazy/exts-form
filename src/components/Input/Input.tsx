@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FieldError, RegisterOptions } from "react-hook-form";
 import { IFormInputName, IRegister } from "../../lib/types";
+import { InputIconst } from "../InputIcons/InputIcons";
 import { InputStyled } from "./Input.style";
 
 type InputProps = {
@@ -31,11 +32,14 @@ export const Input = ({
   }, [fieldError]);
 
   return (
-    <InputStyled
-      withRedBorder={applyRed}
-      withGreenBorder={applyGreen}
-      {...register(fieldName, { onChange: handleChange, ...registerOptions })}
-      type={type}
-    />
+    <>
+      <InputStyled
+        withRedBorder={applyRed}
+        withGreenBorder={applyGreen}
+        {...register(fieldName, { onChange: handleChange, ...registerOptions })}
+        type={type}
+      />
+      <InputIconst />
+    </>
   );
 };

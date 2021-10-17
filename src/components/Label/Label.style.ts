@@ -8,6 +8,7 @@ type LabelStyledProps = {
 export const LabelStyled = styled.label<LabelStyledProps>`
   display: flex;
   flex-direction: column;
+  position: relative;
 
   span {
     text-transform: capitalize;
