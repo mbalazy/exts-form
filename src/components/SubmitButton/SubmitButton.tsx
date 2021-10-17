@@ -1,11 +1,13 @@
+import { SubmitButtonStyled } from "./SubmitButton.style";
+
 type SubmitButtonProps = {
   disabled: boolean;
 };
 
 export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
   return (
-    <button disabled={disabled} type="submit">
+    <SubmitButtonStyled disabled={disabled} type="submit">
       Submit
-    </button>
+    </SubmitButtonStyled>
   );
 };
