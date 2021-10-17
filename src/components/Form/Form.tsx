@@ -8,6 +8,7 @@ import { Label } from "../Label/Label";
 import { SubmitButton } from "../SubmitButton/SubmitButton";
 import { Input } from "../Input/Input";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
+import { Spinner } from "../Spinner/Spinner";
 
 let timeout: NodeJS.Timeout;
 
@@ -59,8 +60,6 @@ export const Form = () => {
       : handleEmailValidation(emailValue);
   }, [emailValue]);
 
-  // console.log(errors);
-
   return (
     <FormStyled onSubmit={submit}>
       <Label isRequired labelName="name">
@@ -95,8 +94,8 @@ export const Form = () => {
       <Label labelName="male" sideBySide>
         <Input type="checkbox" register={register} fieldName="male" />
       </Label>
-      {emailValidationLoading && <p>checking email</p>}
       <SubmitButton disabled={!isEmailValid || emailValidationLoading} />
+      {emailValidationLoading && <Spinner />}
     </FormStyled>
   );
 };
