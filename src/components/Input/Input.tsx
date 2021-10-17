@@ -19,23 +19,23 @@ export const Input = ({
   type,
   fieldError,
 }: InputProps) => {
-  const [applyGreen, setApplyGreen] = useState(false);
-  const [applyRed, setApplyRed] = useState(false);
+  const [greenStyle, setGreenStyle] = useState(false);
+  const [redStyle, setRedStyle] = useState(false);
 
   //triger green border on first keystroke
-  const handleChange = () => setApplyGreen(true);
+  const handleChange = () => setGreenStyle(true);
 
-  //conditionally overwrite (in css) green border with red
+  //conditionally overwrite (in css) green state with red
   //when there are errors in that field
   useEffect(() => {
-    fieldError ? setApplyRed(true) : setApplyRed(false);
+    fieldError ? setRedStyle(true) : setRedStyle(false);
   }, [fieldError]);
 
   return (
     <>
       <InputStyled
-        withRedBorder={applyRed}
-        withGreenBorder={applyGreen}
+        withRedStyle={redStyle}
+        withGreenStyle={greenStyle}
         {...register(fieldName, { onChange: handleChange, ...registerOptions })}
         type={type}
       />

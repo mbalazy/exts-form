@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 
 type InputStyledProps = {
-  withGreenBorder?: boolean;
-  withRedBorder?: boolean;
+  withGreenStyle?: boolean;
+  withRedStyle?: boolean;
 };
 
 export const InputStyled = styled.input<InputStyledProps>`
@@ -12,8 +12,8 @@ export const InputStyled = styled.input<InputStyledProps>`
   border-radius: 4px;
   border: 2px solid ${({ theme }) => theme.colors.black};
 
-  ${({ withGreenBorder }) =>
-    withGreenBorder &&
+  ${({ withGreenStyle }) =>
+    withGreenStyle &&
     css`
       border: 2px solid green;
       & + .icons {
@@ -22,8 +22,8 @@ export const InputStyled = styled.input<InputStyledProps>`
       }
     `}
 
-  ${({ withRedBorder }) =>
-    withRedBorder &&
+  ${({ withRedStyle }) =>
+    withRedStyle &&
     css`
       border: 2px solid red;
       & + .icons {

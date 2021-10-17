@@ -60,6 +60,11 @@ export const Form = () => {
       : handleEmailValidation(emailValue);
   }, [emailValue]);
 
+  const isFormDisabled =
+    !isEmailValid ||
+    emailValidationLoading ||
+    Boolean(errors?.name !== undefined);
+
   return (
     <FormStyled onSubmit={submit}>
       <Label isRequired labelName="name">
@@ -95,7 +100,7 @@ export const Form = () => {
       <Label labelName="male" sideBySide>
         <Input type="checkbox" register={register} fieldName="male" />
       </Label>
-      <SubmitButton disabled={!isEmailValid || emailValidationLoading} />
+      <SubmitButton disabled={isFormDisabled} />
       {emailValidationLoading && <Spinner />}
     </FormStyled>
   );
