@@ -87,6 +87,7 @@ export const Form = () => {
           register={register}
           registerOptions={{
             validate: () => isEmailValid || "Invalid email",
+            required: "Email is required",
           }}
         />
         {<ErrorMessage message={errors?.email?.message} />}
