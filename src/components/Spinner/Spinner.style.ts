@@ -4,8 +4,8 @@ import styled from "styled-components";
 
 export const SpinnerWrapper = styled.div`
   position: absolute;
-  bottom: 11rem;
-  right: 6rem;
+  bottom: 14rem;
+  right: 8rem;
 `
 
 export const SpinnerStyled = styled.div`
