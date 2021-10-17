@@ -1,6 +1,14 @@
-import { UseFormRegister } from "react-hook-form";
+import { FieldError, UseFormRegister } from "react-hook-form";
 
 export type IEmail = string;
+
+export type IFieldsError = {
+  name?: FieldError | undefined;
+  surname?: FieldError | undefined;
+  birthdate?: FieldError | undefined;
+  email?: FieldError | undefined;
+  male?: FieldError | undefined;
+};
 
 export type IFormInputs = {
   name: string;

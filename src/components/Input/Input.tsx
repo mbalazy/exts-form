@@ -1,5 +1,5 @@
 import { RegisterOptions } from "react-hook-form";
-import { IFormInputName, IRegister } from "../../lib/types";
+import { IFieldsError, IFormInputName, IRegister } from "../../lib/types";
 import { InputStyled } from "./Input.style";
 
 type InputProps = {
@@ -7,6 +7,7 @@ type InputProps = {
   fieldName: IFormInputName;
   registerOptions?: RegisterOptions;
   type?: string;
+  errors?: IFieldsError;
 };
 
 export const Input = ({
@@ -14,6 +15,20 @@ export const Input = ({
   fieldName,
   registerOptions,
   type,
+  errors,
 }: InputProps) => {
-  return <InputStyled {...register(fieldName, registerOptions)} type={type} />;
+  // console.log(errors);
+
+  let applyRed = () => false;
+  if (errors) {
+    applyRed = () => errors[fieldName]?.message !== undefined;
+  }
+
+  return (
+    <InputStyled
+      withRedBorder={applyRed()}
+      {...register(fieldName, registerOptions)}
+      type={type}
+    />
+  );
 };

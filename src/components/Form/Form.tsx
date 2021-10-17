@@ -59,12 +59,13 @@ export const Form = () => {
       : handleEmailValidation(emailValue);
   }, [emailValue]);
 
-  console.log(errors);
+  // console.log(errors);
 
   return (
     <FormStyled onSubmit={submit}>
       <Label isRequired labelName="name">
         <Input
+          errors={errors}
           register={register}
           fieldName="name"
           registerOptions={{
@@ -84,6 +85,7 @@ export const Form = () => {
         <Input
           register={register}
           fieldName="email"
+          errors={errors}
           registerOptions={{
             validate: () => isEmailValid || "Invalid email",
           }}
