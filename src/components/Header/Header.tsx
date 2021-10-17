@@ -3,7 +3,7 @@ import { HeaderStyle } from "./Header.style";
 export const Header = () => {
   return (
     <HeaderStyle>
-      <p>logo</p>
+      <h1>Exts-form</h1>
     </HeaderStyle>
   );
 };
